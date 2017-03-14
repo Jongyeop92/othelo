@@ -152,7 +152,7 @@ class Board:
             cornerY, cornerX = cornerPosition
 
             if self.board[cornerY][cornerX] == color:
-                point += 3
+                point += 2
 
         for y in [0, self.height - 1]:
             for x in range(1, self.width - 1):
