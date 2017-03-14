@@ -140,6 +140,32 @@ class Board:
                     self.whiteCount -= flipCount
                     self.blackCount += flipCount
 
+    def getPoint(self, color):
+        if color == WHITE:
+            point = self.whiteCount
+        else:
+            point = self.blackCount
+
+        cornerPositionList = [(0, 0), (0, self.width - 1), (self.height - 1, 0), (self.height - 1, self.width - 1)]
+
+        for cornerPosition in cornerPositionList:
+            cornerY, cornerX = cornerPosition
+
+            if self.board[cornerY][cornerX] == color:
+                point += 3
+
+        for y in [0, self.height - 1]:
+            for x in range(1, self.width - 1):
+                if self.board[y][x] == color:
+                    point += 1
+
+        for y in range(1, self.height - 1):
+            for x in [0, self.width - 1]:
+                if self.board[y][x] == color:
+                    point += 1
+
+        return point
+
     def isWin(self):
         if self.getPossiblePositionList(WHITE) == [] and self.getPossiblePositionList(BLACK) == []:
             if self.whiteCount > self.blackCount:
@@ -233,7 +259,7 @@ def minimax(state, depth, maxPlayer, firstCall=False):
         else:
             return 0
     elif depth == 0:
-        return state.whiteCount - state.blackCount
+        return state.getPoint(WHITE) - state.getPoint(BLACK)
 
     if maxPlayer:
         nowColor = WHITE
@@ -304,7 +330,7 @@ def main():
                     print "Wrong position"
             else:
                 start = time.time()
-                info = minimax(state, 4, maxPlayer, True)
+                info = minimax(state, 3, maxPlayer, True)
                 gap = time.time() - start
 
                 state.setStone(nowColor, info[1])
