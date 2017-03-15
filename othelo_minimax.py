@@ -10,6 +10,7 @@ WHITE = 'W'
 
 DRAW = 'draw'
 
+INFINITE = 99999999
 
 class Board:
 
@@ -253,9 +254,9 @@ def minimax(state, depth, maxPlayer, firstCall=False):
 
     if result != None:
         if result == WHITE:
-            return 100
+            return INFINITE
         elif result == BLACK:
-            return -100
+            return -INFINITE
         else:
             return 0
     elif depth == 0:
@@ -305,6 +306,8 @@ def main():
 
         nowColor = colorList[turn]
 
+        print "White:", state.whiteCount
+        print "Black:", state.blackCount
         state.showBoard()
 
         result = state.isWin()
@@ -337,7 +340,7 @@ def main():
 
                 print nowColor
                 print "Info:", info
-                print "gap :", gap
+                print "Gap :", gap
 
         print
 
