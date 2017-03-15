@@ -152,7 +152,7 @@ class Board:
             cornerY, cornerX = cornerPosition
 
             if self.board[cornerY][cornerX] == color:
-                point += 2
+                point += 5
 
         for y in [0, self.height - 1]:
             for x in range(1, self.width - 1):
@@ -285,7 +285,7 @@ def minimax(state, depth, maxPlayer, firstCall=False):
                 bestInfoList = [(value, position)]
 
     if bestInfoList == []:
-        bestInfoList = [(0, (0, 0))]
+        return 0
 
     if firstCall:
         return random.choice(bestInfoList)
