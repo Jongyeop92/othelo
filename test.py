@@ -63,6 +63,16 @@ def test():
 
     assert state.isWin() == None
 
+    assert state.getBoardStr() == ("-" * 8    + "\n" +
+                                   "-" * 8    + "\n" +
+                                   "---BW---" + "\n" +
+                                   "---BW---" + "\n" +
+                                   "---BW---" + "\n" +
+                                   "-" * 8    + "\n" +
+                                   "-" * 8    + "\n" +
+                                   "-" * 8)
+                                  
+
     state.showBoard()
 
     

@@ -29,15 +29,18 @@ class Board:
         for i in range(height):
             board.append([EMPTY] * width)
 
-        board[3][3] = WHITE
-        board[3][4] = BLACK
-        board[4][3] = BLACK
-        board[4][4] = WHITE
+        board[height / 2 - 1][width / 2 - 1] = WHITE
+        board[height / 2 - 1][width / 2] = BLACK
+        board[height / 2][width / 2 - 1] = BLACK
+        board[height / 2][width / 2] = WHITE
 
         return board
     
     def getBoard(self):
         return self.board
+
+    def getBoardStr(self):
+        return '\n'.join(''.join(row) for row in self.board)
 
     def showBoard(self):
         for row in self.board:
@@ -143,23 +146,23 @@ class Board:
         else:
             point = self.blackCount
 
-        cornerPositionList = [(0, 0), (0, self.width - 1), (self.height - 1, 0), (self.height - 1, self.width - 1)]
-
-        for cornerPosition in cornerPositionList:
-            cornerY, cornerX = cornerPosition
-
-            if self.board[cornerY][cornerX] == color:
-                point += 5
-
-        for y in [0, self.height - 1]:
-            for x in range(1, self.width - 1):
-                if self.board[y][x] == color:
-                    point += 1
-
-        for y in range(1, self.height - 1):
-            for x in [0, self.width - 1]:
-                if self.board[y][x] == color:
-                    point += 1
+##        cornerPositionList = [(0, 0), (0, self.width - 1), (self.height - 1, 0), (self.height - 1, self.width - 1)]
+##
+##        for cornerPosition in cornerPositionList:
+##            cornerY, cornerX = cornerPosition
+##
+##            if self.board[cornerY][cornerX] == color:
+##                point += 5
+##
+##        for y in [0, self.height - 1]:
+##            for x in range(1, self.width - 1):
+##                if self.board[y][x] == color:
+##                    point += 1
+##
+##        for y in range(1, self.height - 1):
+##            for x in [0, self.width - 1]:
+##                if self.board[y][x] == color:
+##                    point += 1
 
         return point
 

@@ -51,8 +51,8 @@ def main():
             else:
                 start = time.time()
                 
-                info = minimax(state, 3, maxPlayer, True)
-                #info = alphabeta(state, 3, -INFINITE, INFINITE, maxPlayer, True)
+                #info = minimax(state, 3, maxPlayer, True)
+                info = alphabeta(state, 3, -INFINITE, INFINITE, maxPlayer, True)
                 
                 gap = time.time() - start
 
