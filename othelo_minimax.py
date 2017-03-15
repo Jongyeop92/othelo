@@ -300,6 +300,11 @@ def main():
     turn = 0
     maxPlayer = True
 
+    minTime = None
+    maxTime = None
+    totalTime = 0
+    count = 0
+
     human = input()
 
     while True:
@@ -335,6 +340,15 @@ def main():
                 start = time.time()
                 info = minimax(state, 3, maxPlayer, True)
                 gap = time.time() - start
+
+                if minTime == None or gap < minTime:
+                    minTime = gap
+
+                if maxTime == None or gap > maxTime:
+                    maxTime = gap
+
+                totalTime += gap
+                count += 1
 
                 state.setStone(nowColor, info[1])
 

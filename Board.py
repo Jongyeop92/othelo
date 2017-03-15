@@ -1,9 +1,5 @@
 # -*- coding: utf8 -*-
 
-import copy
-import random
-import time
-
 EMPTY = '-'
 BLACK = 'B'
 WHITE = 'W'
@@ -153,17 +149,17 @@ class Board:
             cornerY, cornerX = cornerPosition
 
             if self.board[cornerY][cornerX] == color:
-                point += 25
+                point += 5
 
         for y in [0, self.height - 1]:
             for x in range(1, self.width - 1):
                 if self.board[y][x] == color:
-                    point += 3
+                    point += 1
 
         for y in range(1, self.height - 1):
             for x in [0, self.width - 1]:
                 if self.board[y][x] == color:
-                    point += 3
+                    point += 1
 
         return point
 
@@ -180,142 +176,3 @@ class Board:
 
     def isInBoard(self, y, x):
         return 0 <= y and y < self.height and 0 <= x and x < self.width
-
-
-def alphabeta(state, depth, alpha, beta, maxPlayer, firstCall=False):
-    result = state.isWin()
-
-    if result != None:
-        if result == WHITE:
-            return INFINITE
-        elif result == BLACK:
-            return -INFINITE
-        else:
-            return 0
-    elif depth == 0:
-        return state.getPoint(WHITE) - state.getPoint(BLACK)
-
-    if maxPlayer:
-        nowColor = WHITE
-    else:
-        nowColor = BLACK
-
-    bestInfo = None
-    possiblePositionList = state.getPossiblePositionList(nowColor)
-    random.shuffle(possiblePositionList)
-
-    for position in possiblePositionList:
-        copyState = copy.deepcopy(state)
-        copyState.setStone(nowColor, position)
-        value = alphabeta(copyState, depth - 1, alpha, beta, not maxPlayer)
-
-        if maxPlayer and alpha < value:
-            alpha = value
-            bestInfo = (alpha, position)
-
-            if beta <= alpha:
-                break
-        elif not maxPlayer and beta > value:
-            beta = value
-            bestInfo = (beta, position)
-
-            if beta <= alpha:
-                break
-
-    if bestInfo == None:
-        if maxPlayer:
-            value = INFINITE
-        else:
-            value = -INFINITE
-
-        if firstCall:
-            return (value, possiblePositionList[0])
-        else:
-            return value
-
-    if firstCall:
-        return bestInfo
-    else:
-        return bestInfo[0]
-
-
-def main():
-    state = Board(8, 8)
-    colorList = [WHITE, BLACK]
-    turn = 0
-    maxPlayer = True
-
-    minTime = None
-    maxTime = None
-    totalTime = 0
-    count = 0
-
-    human = input()
-
-    while True:
-
-        nowColor = colorList[turn]
-        
-        print "White:", state.whiteCount
-        print "Black:", state.blackCount
-        state.showBoard()
-
-        result = state.isWin()
-
-        if result != None:
-            break
-        elif state.getPossiblePositionList(nowColor) == []:
-            if state.lastColor == nowColor:
-                break
-            else:
-                print nowColor
-                print "No possible position"
-        else:
-            if turn == human:
-                while True:
-                    print "input:",
-                    y, x = map(int, raw_input().split())
-
-                    if state.setStone(nowColor, (y, x)):
-                        break
-
-                    print nowColor
-                    print "Wrong position"
-            else:
-                start = time.time()
-                info = alphabeta(state, 3, -INFINITE, INFINITE, maxPlayer, True)
-                gap = time.time() - start
-
-                if minTime == None or gap < minTime:
-                    minTime = gap
-
-                if maxTime == None or gap > maxTime:
-                    maxTime = gap
-
-                totalTime += gap
-                count += 1
-
-                state.setStone(nowColor, info[1])
-
-                print nowColor
-                print "Info:", info
-                print "Gap :", gap
-        print
-
-        turn = (turn + 1) % 2
-        maxPlayer = not maxPlayer
-
-    print "Win:", state.isWin()
-    print "White:", state.whiteCount
-    print "Black:", state.blackCount
-    print
-    print "MinTime  :", minTime
-    print "MaxTime  :", maxTime
-    print "MeanTime :", (totalTime / count)
-    print "TotalTime:", totalTime
-    print
-    print "Count:", count
-
-
-if __name__ == "__main__":
-    main()
