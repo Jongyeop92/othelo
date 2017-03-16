@@ -85,7 +85,7 @@ class MonteCarlo(object):
 
             if all(self.plays.get((player, S.getBoardStr())) for p, S in moves_states):
                 log_total = log(
-                    sum(self.plays[(player, S.getBoardStr())] for p, S in moves_states) + .1)
+                    sum(self.plays[(player, S.getBoardStr())] for p, S in moves_states))
                 value, move, state = max(
                     ((self.wins[(player, S.getBoardStr())] / self.plays[(player, S.getBoardStr())]) +
                      self.C * sqrt(log_total / self.plays[(player, S.getBoardStr())]), p, S)

@@ -13,7 +13,7 @@ def main():
     turn = 0
     maxPlayer = True
 
-    monteCarlo = MonteCarlo(time=1, max_moves=100)
+    monteCarlo = MonteCarlo(time=10, max_moves=100)
 
     minTime = None
     maxTime = None
@@ -55,12 +55,13 @@ def main():
                 start = time.time()
 
                 if nowColor == WHITE:
-                    #info = monteCarlo.get_play(state, nowColor)
-                    info = minimax(state, 3, maxPlayer, True)
+                    info = monteCarlo.get_play(state, nowColor)
+                    #info = minimax(state, 3, maxPlayer, True)
                     #info = alphabeta(state, 5, -INFINITE, INFINITE, maxPlayer, True)
                     pass
                 else:
-                    info = monteCarlo.get_play(state, nowColor)
+                    #info = monteCarlo.get_play(state, nowColor)
+                    info = minimax(state, 3, maxPlayer, True)
                     pass
                 
                 #info = minimax(state, 3, maxPlayer, True)
