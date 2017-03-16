@@ -2,6 +2,7 @@
 
 from Board import *
 from GameAI import *
+from MonteCarlo import *
 
 import time
 
@@ -11,6 +12,8 @@ def main():
     colorList = [WHITE, BLACK]
     turn = 0
     maxPlayer = True
+
+    monteCarlo = MonteCarlo(time=1, max_moves=100)
 
     minTime = None
     maxTime = None
@@ -50,9 +53,19 @@ def main():
                     print "Wrong position"
             else:
                 start = time.time()
+
+                if nowColor == WHITE:
+                    #info = monteCarlo.get_play(state, nowColor)
+                    info = minimax(state, 3, maxPlayer, True)
+                    #info = alphabeta(state, 5, -INFINITE, INFINITE, maxPlayer, True)
+                    pass
+                else:
+                    info = monteCarlo.get_play(state, nowColor)
+                    pass
                 
                 #info = minimax(state, 3, maxPlayer, True)
-                info = alphabeta(state, 3, -INFINITE, INFINITE, maxPlayer, True)
+                #info = alphabeta(state, 3, -INFINITE, INFINITE, maxPlayer, True)
+                #info = monteCarlo.get_play(state, nowColor)
                 
                 gap = time.time() - start
 

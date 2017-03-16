@@ -47,6 +47,18 @@ class Board:
             print '+'.join(row)
         print
 
+    def getNextPlayer(self):
+        if self.lastColor == None or self.lastColor == BLACK:
+            if self.getPossiblePositionList(WHITE) != []:
+                return WHITE
+            else:
+                return BLACK
+        else:
+            if self.getPossiblePositionList(BLACK) != []:
+                return BLACK
+            else:
+                WHITE
+
     def getPossiblePositionList(self, nowColor):
         possiblePositionList = []
 
